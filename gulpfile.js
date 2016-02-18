@@ -8,7 +8,8 @@ var gulp = require('gulp'),
      del = require('del'),
   useref = require('gulp-useref'),
      iff = require('gulp-if'),
-    csso = require('gulp-csso');
+    csso = require('gulp-csso'),
+   pages = require('gulp-gh-pages');
 
 var options = {
   src: './src/',
@@ -56,7 +57,12 @@ gulp.task('clean', function() {
   del([options.src + 'css/main.css*']);
 });
 
-gulp.task('build', ['html', 'assets'])
+gulp.task('build', ['html', 'assets']);
+
+gulp.task('deploy', function() {
+  return gulp.src(options.dist + '**/*')
+    .pipe(pages());
+});
 
 gulp.task('default', ['clean'], function(){
   gulp.start('build');
